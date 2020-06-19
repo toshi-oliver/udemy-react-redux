@@ -1,14 +1,19 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from "react";
+import ReactDOM from "react-dom";
+import { createStore } from "redux"; //storeを作成する
+import { Provider } from "react-redux"; //作成したstoreを全コンポーネントに提供する
+import "./index.css";
+import reducer from "./reducers";
+import App from "./component/App";
+import * as serviceWorker from "./serviceWorker";
+
+const store = createStore(reducer);
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  </Provider>,
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change
