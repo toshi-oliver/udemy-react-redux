@@ -4,7 +4,7 @@ import { createStore } from "redux"; //storeを作成する
 import { Provider } from "react-redux"; //作成したstoreを全コンポーネントに提供する
 import "./index.css";
 import reducer from "./reducers";
-import App from "./component/App";
+import App from "./components/App";
 import * as serviceWorker from "./serviceWorker";
 
 const store = createStore(reducer);
