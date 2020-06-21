@@ -9,7 +9,7 @@ class EventsNew extends Component {
     super(props);
     this.onSubmit = this.onSubmit.bind(this); //TODO: bindってなんぞ
   }
-
+  // NOTE: touchedはredux-formのオプションで、touched状態を見てエラーの文言の表示を決める。
   renderField(field) {
     const {
       input,
@@ -33,7 +33,7 @@ class EventsNew extends Component {
   }
 
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, pristine, submitting } = this.props;
 
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
@@ -55,7 +55,11 @@ class EventsNew extends Component {
         </div>
 
         <div>
-          <input type="submit" value="Submit" disabled={false} />
+          <input
+            type="submit"
+            value="Submit"
+            disabled={pristine || submitting}
+          />
           <Link to="/">Cancel</Link>
         </div>
       </form>
