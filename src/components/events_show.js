@@ -35,12 +35,12 @@ class EventsShow extends Component {
   }
 
   async onSubmit(values) {
-    // await this.props.postEvent(values);
+    await this.props.putEvent(values);
     this.props.history.push("/"); //TODO: history？履歴？
   }
 
   render() {
-    const { handleSubmit, pristine, submitting } = this.props;
+    const { handleSubmit, pristine, submitting, invalid } = this.props;
 
     return (
       <form onSubmit={handleSubmit(this.onSubmit)}>
@@ -65,7 +65,7 @@ class EventsShow extends Component {
           <input
             type="submit"
             value="Submit"
-            disabled={pristine || submitting}
+            disabled={pristine || submitting || invalid}
           />
           <Link to="/">Cancel</Link>
           <Link to="/" onClick={this.onDeleteClick}>
@@ -86,12 +86,22 @@ const validate = (values) => {
   return errors;
 };
 
-const mapDispatchToProps = { deleteEvent };
+const mapDispatchToProps = { deleteEvent, getEvent, putEvent };
 // const mapDispatchToProps = (dispatch) => ({
 //   readEvents: () => dispatch(readEvents()),
 // });
 //TODO: connectについてもう一度調べる
+
+const mapStateToProps = (state, ownProps) => {
+  const event = state.events[ownProps.match.params.id];
+  return { initialValues: event, event };
+};
+
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
-)(reduxForm({ validate, form: "eventShowForm" })(EventsShow));
+)(
+  reduxForm({ validate, form: "eventShowForm", enableReinitialize: true })(
+    EventsShow
+  )
+);
